@@ -25,6 +25,9 @@ DESCS=[
  Desc("dry_days","Trockene Tage","mdi:weather-sunny-alert",lambda c:c.snapshot.dry_days,"d"),
  Desc("last_run","Letzte Bewässerung","mdi:history",lambda c:c.snapshot.last_run),
  Desc("next_possible","Nächste mögliche Bewässerung","mdi:calendar-clock",lambda c:c.snapshot.next_possible),
+ Desc("next_action","Nächste Aktion","mdi:calendar-arrow-right",lambda c:c.snapshot.next_action),
+ Desc("prepared_at","Letzte Vorberechnung","mdi:calculator-variant-outline",lambda c:c.snapshot.prepared_at),
+ Desc("planned_start","Geplanter Start","mdi:clock-start",lambda c:c.snapshot.planned_start),
 ]
 class IrrigationSensor(IrrigationEntity,SensorEntity):
     def __init__(self,c,d): super().__init__(c,d.key); self.d=d; self._attr_name=d.name; self._attr_icon=d.icon; self._attr_native_unit_of_measurement=d.unit; self._attr_device_class=d.device_class

@@ -1,6 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, asdict
 from typing import Any
+
 @dataclass(slots=True)
 class IrrigationSnapshot:
     status: str = "initializing"
@@ -19,4 +20,9 @@ class IrrigationSnapshot:
     runtime_minutes: int = 0
     last_run: str | None = None
     next_possible: str | None = None
-    def as_dict(self) -> dict[str, Any]: return asdict(self)
+    next_action: str = "Wird ermittelt"
+    prepared_at: str | None = None
+    planned_start: str | None = None
+
+    def as_dict(self) -> dict[str, Any]:
+        return asdict(self)

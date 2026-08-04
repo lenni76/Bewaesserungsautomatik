@@ -2,7 +2,7 @@
 
 ![Logo](images/logo_256.png)
 
-Wetterabhängige Pflanzenbewässerung für Home Assistant. Version 1.0 ist auf ein **Blumenbeet mit sonnigem Standort und Mikrosprühern** abgestimmt.
+Wetterabhängige Pflanzenbewässerung für Home Assistant. Version 1.0.1 ist auf ein **Blumenbeet mit sonnigem Standort und Mikrosprühern** abgestimmt.
 
 ## Funktionen
 
@@ -15,6 +15,11 @@ Wetterabhängige Pflanzenbewässerung für Home Assistant. Version 1.0 ist auf e
 - separat deaktivierbare Sicherheitsabschaltung
 - transparente Entscheidung, Datenqualität, Logbuch und Diagnose
 - native Dashboard-Konfiguration ohne Pflicht zu Mushroom/HACS-Frontendkarten
+- einstellbare Startzeit, standardmäßig 05:00 Uhr
+- Vorberechnung automatisch zehn Minuten vor dem Start
+- erneute Wetter- und Sicherheitsprüfung unmittelbar vor Ventilöffnung
+- nächste Aktion, geplanter Start und verbleibende Laufzeit als Sensoren
+- optionale Benachrichtigungen über einen frei wählbaren Home-Assistant-Dienst
 
 ## Installation
 
@@ -48,4 +53,4 @@ Das Repository enthält SVG- und PNG-Dateien. Ein Logo in der Home-Assistant-Int
 
 ## Hinweise
 
-Die Regen- und Temperaturhistorie wird ab Installation aufgebaut. In den ersten Tagen ist die Datenqualität daher als Fallback gekennzeichnet. Die Startzeit ist in Version 1.0 auf 05:00 Uhr festgelegt. Änderungen an der Startzeit sind für eine spätere Options-Flow-Version vorgesehen.
+Die Regen- und Temperaturhistorie wird ab Installation aufgebaut. In den ersten Tagen ist die Datenqualität daher als Fallback gekennzeichnet. Die Startzeit ist standardmäßig 05:00 Uhr und kann über die Time-Entität direkt im Dashboard geändert werden. Die Vorberechnung erfolgt automatisch zehn Minuten vorher. Für Benachrichtigungen wird der vollständige Dienstname eingetragen, zum Beispiel `notify.mobile_app_mein_handy`; anschließend wird der Schalter „Benachrichtigungen“ aktiviert.

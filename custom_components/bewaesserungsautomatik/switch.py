@@ -18,4 +18,4 @@ class SkipSwitch(IrrigationEntity,SwitchEntity):
     async def async_turn_off(self,**kwargs): await self.coordinator.async_set_skip_today(False)
 async def async_setup_entry(hass:HomeAssistant,entry:ConfigEntry,async_add_entities:AddConfigEntryEntitiesCallback):
     c=hass.data["bewaesserungsautomatik"][entry.entry_id]
-    async_add_entities([SettingSwitch(c,"automation_enabled","Automatik","mdi:robot"),SettingSwitch(c,"safety_enabled","Sicherheitsabschaltung","mdi:shield-check"),SettingSwitch(c,"expert_mode","Expertenmodus","mdi:tune-variant"),SkipSwitch(c)])
+    async_add_entities([SettingSwitch(c,"automation_enabled","Automatik","mdi:robot"),SettingSwitch(c,"safety_enabled","Sicherheitsabschaltung","mdi:shield-check"),SettingSwitch(c,"expert_mode","Expertenmodus","mdi:tune-variant"),SettingSwitch(c,"notifications_enabled","Benachrichtigungen","mdi:message-badge-outline"),SkipSwitch(c)])
