@@ -2,7 +2,7 @@
 
 ![Logo](images/logo_256.png)
 
-Wetterabhängige Pflanzenbewässerung für Home Assistant. Version 1.0.2 ist auf ein **Blumenbeet mit sonnigem Standort und Mikrosprühern** abgestimmt.
+Wetterabhängige Pflanzenbewässerung für Home Assistant. Version 1.0.3 ist auf ein **Blumenbeet mit sonnigem Standort und Mikrosprühern** abgestimmt.
 
 ## Funktionen
 
@@ -54,3 +54,16 @@ Das Repository enthält SVG- und PNG-Dateien. Ein Logo in der Home-Assistant-Int
 ## Hinweise
 
 Die Regen- und Temperaturhistorie wird ab Installation aufgebaut. In den ersten Tagen ist die Datenqualität daher als Fallback gekennzeichnet. Die Startzeit ist standardmäßig 05:00 Uhr und kann über die Time-Entität direkt im Dashboard geändert werden. Die Vorberechnung erfolgt automatisch zehn Minuten vorher. Für Benachrichtigungen wird der vollständige Dienstname eingetragen, zum Beispiel `notify.mobile_app_mein_handy`; anschließend wird der Schalter „Benachrichtigungen“ aktiviert.
+
+
+## Ereignisgesteuerte Neuberechnung
+
+Die empfohlene Bewässerungszeit wird zusätzlich zur täglichen Vorberechnung automatisch aktualisiert:
+
+- bei einer Temperaturänderung von mindestens 2 °C,
+- bei einer Niederschlagsänderung von mindestens 0,1 mm,
+- bei einer Aktualisierung von `weather.koln_bonn`,
+- nach dem täglichen Archivieren der Messwerte,
+- sowie unmittelbar nach Änderungen an den Einstellungen.
+
+Mehrere kurz aufeinanderfolgende Änderungen werden fünf Sekunden lang gesammelt und anschließend gemeinsam berechnet. Die automatische Bewässerung startet dadurch nicht zusätzlich; sie bleibt auf den eingestellten täglichen Startzeitpunkt begrenzt.

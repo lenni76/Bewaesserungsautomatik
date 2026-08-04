@@ -7,7 +7,7 @@ from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers.event import async_track_state_change_event, async_track_time_change
+from homeassistant.helpers.event import async_call_later, async_track_state_change_event, async_track_time_change
 from homeassistant.helpers.storage import Store
 from homeassistant.util import dt as dt_util
 
@@ -36,6 +36,9 @@ class IrrigationCoordinator:
         self._subscribers: set[Any] = set()
         self._run_task: asyncio.Task | None = None
         self._refresh_lock = asyncio.Lock()
+        self._refresh_debounce_unsub = None
+        self._last_refresh_temperature: float | None = None
+        self._last_refresh_rain: float | None = None
 
     async def async_initialize(self) -> None:
         saved = await self.store.async_load() or {}
@@ -53,6 +56,12 @@ class IrrigationCoordinator:
                 async_track_state_change_event(
                     self.hass, [self.config[CONF_TEMPERATURE]], self._temperature_changed
                 ),
+                async_track_state_change_event(
+                    self.hass, [self.config[CONF_PRECIPITATION]], self._precipitation_changed
+                ),
+                async_track_state_change_event(
+                    self.hass, [self.config[CONF_WEATHER]], self._weather_changed
+                ),
                 async_track_time_change(
                     self.hass, self._archive_day, hour=23, minute=59, second=45
                 ),
@@ -68,6 +77,9 @@ class IrrigationCoordinator:
         self._schedule_listeners.clear()
         if self._run_task:
             self._run_task.cancel()
+        if self._refresh_debounce_unsub:
+            self._refresh_debounce_unsub()
+            self._refresh_debounce_unsub = None
         await self._save()
 
     @callback
@@ -102,8 +114,35 @@ class IrrigationCoordinator:
 
     async def _temperature_changed(self, event) -> None:
         value = self._number(event.data.get("new_state"))
-        if value is not None:
-            self._today_max = value if self._today_max is None else max(self._today_max, value)
+        if value is None:
+            return
+        self._today_max = value if self._today_max is None else max(self._today_max, value)
+        reference = self._last_refresh_temperature
+        if reference is None or abs(value - reference) >= 2.0:
+            self._schedule_event_refresh("Temperaturänderung")
+
+    async def _precipitation_changed(self, event) -> None:
+        value = self._number(event.data.get("new_state"))
+        if value is None:
+            return
+        reference = self._last_refresh_rain
+        if reference is None or abs(value - reference) >= 0.1:
+            self._schedule_event_refresh("Niederschlagsänderung")
+
+    async def _weather_changed(self, event) -> None:
+        if event.data.get("new_state") is not None:
+            self._schedule_event_refresh("neue Wettervorhersage")
+
+    @callback
+    def _schedule_event_refresh(self, reason: str) -> None:
+        """Debounce several related state updates into one calculation."""
+        if self._refresh_debounce_unsub:
+            self._refresh_debounce_unsub()
+        async def _run_refresh(_now) -> None:
+            self._refresh_debounce_unsub = None
+            _LOGGER.debug("Neuberechnung wegen %s", reason)
+            await self.async_refresh()
+        self._refresh_debounce_unsub = async_call_later(self.hass, 5, _run_refresh)
 
     def _configured_start_time(self) -> time:
         try:
@@ -146,6 +185,7 @@ class IrrigationCoordinator:
         if self.skip_date and self.skip_date != dt_util.now().date().isoformat():
             self.skip_date = None
         await self._save()
+        await self.async_refresh()
 
     async def _scheduled_prepare(self, now: datetime) -> None:
         await self.async_refresh()
@@ -242,6 +282,8 @@ class IrrigationCoordinator:
             forecast_rain, forecast_max, forecast_ok = await self._weather_forecast()
             measured_current = self._state_number(self.config[CONF_TEMPERATURE])
             today_rain = self._state_number(self.config[CONF_PRECIPITATION]) or 0.0
+            self._last_refresh_temperature = measured_current
+            self._last_refresh_rain = today_rain
             previous = list(reversed(self.daily[-4:]))
             rains = [today_rain] + [float(x.get("rain") or 0) for x in previous]
             weights = [1.0, 0.75, 0.50, 0.30, 0.15]

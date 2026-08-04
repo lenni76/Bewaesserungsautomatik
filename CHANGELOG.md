@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.3
+
+- Ereignisgesteuerte Neuberechnung bei Temperaturänderungen ab 2 °C.
+- Neuberechnung bei Niederschlagsänderungen ab 0,1 mm.
+- Neuberechnung bei Aktualisierungen der Wetter-Entität.
+- Neuberechnung nach dem täglichen Archivieren der Messwerte.
+- Änderungen an Einstellungen berechnen die Empfehlung weiterhin sofort neu.
+- Fünf Sekunden Entprellung verhindert unnötige Mehrfachberechnungen.
+
+
 ## 1.0.2 - 2026-08-04
 
 - Korrigiert die Erstinstallation ohne vorhandene Regenhistorie.
