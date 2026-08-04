@@ -1,0 +1,30 @@
+{
+  "title": "Irrigation Automation",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Irrigation Automation",
+        "description": "Select sensors, weather forecast, valve and runtime entity. Default profile: sunny flower bed.",
+        "data": {
+          "temperature_entity": "Temperatursensor",
+          "precipitation_entity": "Niederschlag heute",
+          "weather_entity": "Wettervorhersage",
+          "valve_entity": "Wasserventil",
+          "runtime_entity": "Laufzeit-Entität",
+          "plant_profile": "Pflanzenprofil",
+          "exposure": "Standort"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Only one instance is supported."
+    }
+  },
+  "entity": {
+    "sensor": {},
+    "switch": {},
+    "button": {},
+    "number": {},
+    "binary_sensor": {}
+  }
+}

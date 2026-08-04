@@ -1,0 +1,79 @@
+type: vertical-stack
+cards:
+  - type: heading
+    heading: Bewässerungsautomatik
+    icon: mdi:sprinkler-variant
+  - type: tile
+    entity: sensor.bewasserungsautomatik_status
+    name: Status
+    vertical: false
+    features_position: bottom
+  - type: markdown
+    content: >-
+      **Entscheidung:** {{ states('sensor.bewasserungsautomatik_entscheidung') }}
+  - type: horizontal-stack
+    cards:
+      - type: gauge
+        entity: sensor.bewasserungsautomatik_bewasserungsbedarf
+        name: Bedarf
+        min: 0
+        max: 100
+      - type: gauge
+        entity: sensor.bewasserungsautomatik_empfohlene_laufzeit
+        name: Laufzeit
+        min: 0
+        max: 50
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: tile
+        entity: sensor.bewasserungsautomatik_berechnungstemperatur
+      - type: tile
+        entity: sensor.bewasserungsautomatik_wirksamer_niederschlag
+      - type: tile
+        entity: sensor.bewasserungsautomatik_regen_nachste_12_stunden
+      - type: tile
+        entity: sensor.bewasserungsautomatik_trockene_tage
+  - type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: button
+        entity: button.bewasserungsautomatik_automatisch_jetzt_bewassern
+        name: Jetzt bewässern
+        show_state: false
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target: {entity_id: button.bewasserungsautomatik_automatisch_jetzt_bewassern}
+      - type: button
+        entity: button.bewasserungsautomatik_wasser_manuell_offnen
+        name: Wasser 4 Stunden
+        show_state: false
+        tap_action:
+          action: perform-action
+          confirmation: {text: Wasseranschluss für 4 Stunden öffnen?}
+          perform_action: button.press
+          target: {entity_id: button.bewasserungsautomatik_wasser_manuell_offnen}
+      - type: button
+        entity: button.bewasserungsautomatik_sofort_stoppen
+        name: Sofort stoppen
+        show_state: false
+        tap_action:
+          action: perform-action
+          perform_action: button.press
+          target: {entity_id: button.bewasserungsautomatik_sofort_stoppen}
+      - type: tile
+        entity: switch.bewasserungsautomatik_heute_aussetzen
+  - type: entities
+    title: Steuerung
+    entities:
+      - switch.bewasserungsautomatik_automatik
+      - switch.bewasserungsautomatik_sicherheitsabschaltung
+      - switch.bewasserungsautomatik_expertenmodus
+      - number.bewasserungsautomatik_basislaufzeit
+      - number.bewasserungsautomatik_maximale_automatische_laufzeit
+      - number.bewasserungsautomatik_manuelle_laufzeit
+      - number.bewasserungsautomatik_regenwirkung
+      - number.bewasserungsautomatik_gewichtung_vergangenheit

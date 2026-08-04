@@ -1,0 +1,30 @@
+{
+  "title": "Bewässerungsautomatik",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bewässerungsautomatik einrichten",
+        "description": "Wähle Sensoren, Wettervorhersage, Ventil und Laufzeit-Entität. Standardprofil: Blumenbeet an sonnigem Standort.",
+        "data": {
+          "temperature_entity": "Temperatursensor",
+          "precipitation_entity": "Niederschlag heute",
+          "weather_entity": "Wettervorhersage",
+          "valve_entity": "Wasserventil",
+          "runtime_entity": "Laufzeit-Entität",
+          "plant_profile": "Pflanzenprofil",
+          "exposure": "Standort"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Es ist nur eine Instanz möglich."
+    }
+  },
+  "entity": {
+    "sensor": {},
+    "switch": {},
+    "button": {},
+    "number": {},
+    "binary_sensor": {}
+  }
+}
