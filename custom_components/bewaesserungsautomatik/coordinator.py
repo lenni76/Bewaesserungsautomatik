@@ -258,11 +258,17 @@ class IrrigationCoordinator:
                 calc_temp = float(yesterday_max) * weight + float(forecast_max) * (1 - weight)
             else:
                 calc_temp = yesterday_max if yesterday_max is not None else forecast_max
-            dry_days = 0
-            for record in reversed(self.daily[-7:]):
-                if float(record.get("rain") or 0) >= 8.0:
-                    break
-                dry_days += 1
+            # A fresh installation has no completed daily history yet. Treat a
+            # currently dry day as one dry day instead of multiplying the
+            # irrigation demand by zero until the first midnight archive exists.
+            if not self.daily:
+                dry_days = 0 if today_rain >= 8.0 else 1
+            else:
+                dry_days = 0
+                for record in reversed(self.daily[-7:]):
+                    if float(record.get("rain") or 0) >= 8.0:
+                        break
+                    dry_days += 1
             temp_factor = self._temperature_factor(calc_temp)
             rain_factor = 0 if effective >= 10 else 0.2 if effective >= 8 else 0.4 if effective >= 6 else 0.65 if effective >= 4 else 0.85 if effective >= 2 else 1.0
             dry_factor = 0 if dry_days == 0 else 0.6 if dry_days == 1 else 0.85 if dry_days == 2 else 1.0 if dry_days == 3 else 1.15 if dry_days == 4 else 1.3

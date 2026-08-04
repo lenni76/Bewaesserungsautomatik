@@ -2,7 +2,7 @@
 
 ![Logo](images/logo_256.png)
 
-Wetterabhängige Pflanzenbewässerung für Home Assistant. Version 1.0.1 ist auf ein **Blumenbeet mit sonnigem Standort und Mikrosprühern** abgestimmt.
+Wetterabhängige Pflanzenbewässerung für Home Assistant. Version 1.0.2 ist auf ein **Blumenbeet mit sonnigem Standort und Mikrosprühern** abgestimmt.
 
 ## Funktionen
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2 - 2026-08-04
+
+- Korrigiert die Erstinstallation ohne vorhandene Regenhistorie.
+- Ein trockener aktueller Tag wird nun zunächst als ein trockener Tag bewertet, statt den Trockenheitsfaktor fälschlich auf 0 zu setzen.
+- Dadurch kann die Automatik bereits vor dem ersten gespeicherten Tageswechsel eine sinnvolle Laufzeit berechnen.
+
 ## 1.0.1 - 2026-08-04
 
 - Einstellbare Startzeit als native Home-Assistant-Time-Entität, Standard 05:00 Uhr.
