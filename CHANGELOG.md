@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.2.0 – 2026-10-19
+
+- Neuer HA-Reconfigure-Dialog zum Wechsel der Sensor-, Wetter-, Ventil- und Laufzeit-Zuordnungen.
+- Bestehender Integrationseintrag, Unique IDs, Einstellungen und Winterfreigabe bleiben erhalten; HA lädt die Integration nach dem Speichern neu.
+- Quellenprüfung mit Feldfehlermeldungen und optionaler, einmaliger Rücksetzung ausschließlich der Wetterhistorie.
+- Laufender Betrieb wird vor Übernahme beendet; neue Starts bleiben während des Wechsels gesperrt. Kein unnötiger Reload bei unveränderten Daten.
+- Letzten Bewässerungslauf und gespeichertes Tagesmaximum persistent gemacht; Mindestabstand überlebt Neustart und Neukonfiguration. Migration aus älteren Laufprotokollen.
+- Veraltete, ungültige oder fehlende Vorhersagedaten werden nicht mehr als gültige Regenfreiheit bewertet. Fehlende Regenmessung sperrt die Automatik und wird nicht als trockener Tag archiviert.
+- Umrechnung von Sensor- und Prognosewerten nach °C und mm; Prozent-Einheit mit neuem HA-Enum und Import-Fallback aktualisiert.
+- Funktionstests für Erstkonfiguration, Quellenwechsel, Einheiten, Fehlerfälle, Wiederherstellung und Wintermodus ergänzt.
+
+## 1.1.0 – 2026-10-19 (in 1.2.0 enthalten)
+
+- Neuer dauerhafter Hauptschalter „Bewässerung freigeben“ für Winterpausen.
+- Aus stoppt laufende automatische und manuelle Bewässerung und sperrt jeden neuen Start sowie das Wiederöffnen nach einer Versickerungspause.
+- Wetterauswertung, Historie und Berechnungen laufen weiter. Einschalten startet keinen Lauf.
+- Gespeicherte Sperre wird beim Laden und bei gemeldeter Ventilöffnung erneut durchgesetzt; Schließfehler werden sichtbar.
+- Start/Stop-Abläufe gegen zeitgleiches Ausschalten abgesichert; abgebrochene Aufgaben werden vor dem nächsten Start abgewartet.
+- Dashboard um Freigabeschalter und Winterhinweis ergänzt; Tests für Sperre und laufende Aufgaben hinzugefügt.
+
 ## 1.0.3
 
 - Ereignisgesteuerte Neuberechnung bei Temperaturänderungen ab 2 °C.

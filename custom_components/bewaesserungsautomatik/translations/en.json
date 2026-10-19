@@ -14,7 +14,31 @@
           "plant_profile": "Pflanzenprofil",
           "exposure": "Standort"
         }
+      },
+      "reconfigure": {
+        "title": "Change data sources",
+        "description": "Change weather sensors, forecast or valve assignment. Saving stops any running watering operation. Settings and the winter lock are retained. The optional reset removes only this integration's weather history.",
+        "data": {
+          "temperature_entity": "Temperature sensor",
+          "precipitation_entity": "Today's precipitation (daily total)",
+          "weather_entity": "Weather forecast (hourly)",
+          "valve_entity": "Water valve",
+          "runtime_entity": "Runtime entity",
+          "plant_profile": "Plant profile",
+          "exposure": "Exposure",
+          "reset_weather_history": "Reset weather history (optional)"
+        }
       }
+    },
+    "error": {
+      "invalid_entity": "Select an entity with the required domain.",
+      "entity_unavailable": "The entity is missing or currently unavailable.",
+      "invalid_temperature": "A finite temperature in °C, °F or K is required.",
+      "invalid_rain": "A non-negative daily precipitation total in mm, cm, m or in is required.",
+      "invalid_number": "The runtime entity does not provide a valid number.",
+      "hourly_forecast_required": "This weather entity does not support hourly forecasts.",
+      "invalid_forecast": "No usable hourly temperature and precipitation forecast in the next 12 hours. Please try again later.",
+      "cannot_stop": "The current operation could not be stopped or saved safely. Check the previous valve and logs. Assignments have not been changed."
     },
     "abort": {
       "single_instance_allowed": "Only one instance is supported."

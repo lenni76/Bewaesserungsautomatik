@@ -14,7 +14,31 @@
           "plant_profile": "Pflanzenprofil",
           "exposure": "Standort"
         }
+      },
+      "reconfigure": {
+        "title": "Datenquellen ändern",
+        "description": "Ändere Wetterstation, Vorhersage oder Ventilzuordnung. Ein laufender Betrieb wird beim Speichern gestoppt. Deine Einstellungen und die Winterpause bleiben erhalten. Die optionale Rücksetzung entfernt ausschließlich die Wetterhistorie dieser Integration.",
+        "data": {
+          "temperature_entity": "Temperatursensor",
+          "precipitation_entity": "Niederschlag heute (Tagessumme)",
+          "weather_entity": "Wettervorhersage (stündlich)",
+          "valve_entity": "Wasserventil",
+          "runtime_entity": "Laufzeit-Entität",
+          "plant_profile": "Pflanzenprofil",
+          "exposure": "Standort",
+          "reset_weather_history": "Wetterhistorie zurücksetzen (optional)"
+        }
       }
+    },
+    "error": {
+      "invalid_entity": "Wähle eine Entität des passenden Typs.",
+      "entity_unavailable": "Die Entität fehlt oder ist derzeit nicht verfügbar.",
+      "invalid_temperature": "Erwartet wird eine endliche Temperatur mit Einheit °C, °F oder K.",
+      "invalid_rain": "Erwartet wird die nicht negative Niederschlags-Tagessumme mit Einheit mm, cm, m oder in.",
+      "invalid_number": "Die Laufzeit-Entität liefert keinen gültigen Zahlenwert.",
+      "hourly_forecast_required": "Diese Wetter-Entität unterstützt keine stündliche Vorhersage.",
+      "invalid_forecast": "Keine verwendbare stündliche Temperatur- und Regenvorhersage für die nächsten 12 Stunden verfügbar. Bitte später erneut versuchen.",
+      "cannot_stop": "Der laufende Betrieb konnte nicht sicher beendet oder gespeichert werden. Prüfe das bisherige Ventil und die Protokolle. Die Zuordnungen wurden nicht geändert."
     },
     "abort": {
       "single_instance_allowed": "Es ist nur eine Instanz möglich."

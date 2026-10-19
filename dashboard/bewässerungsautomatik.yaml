@@ -4,6 +4,14 @@ cards:
     heading: Bewässerungsautomatik
     icon: mdi:sprinkler-variant
   - type: tile
+    entity: switch.bewasserungsautomatik_bewasserung_freigeben
+    name: Bewässerung freigeben · Aus = Winterpause
+    icon: mdi:water-check
+    tap_action:
+      action: toggle
+      confirmation:
+        text: Bewässerungsfreigabe ändern? Aus stoppt auch einen laufenden manuellen Betrieb.
+  - type: tile
     entity: sensor.bewasserungsautomatik_status
     name: Status
   - type: markdown
@@ -11,6 +19,10 @@ cards:
       **Entscheidung:** {{ states('sensor.bewasserungsautomatik_entscheidung') }}
 
       **Nächste Aktion:** {{ states('sensor.bewasserungsautomatik_nachste_aktion') }}
+
+      {% if is_state('switch.bewasserungsautomatik_bewasserung_freigeben', 'off') %}
+      ❄️ **Winterpause:** Das Ventil ist gesperrt. Wetterauswertung und Berechnung laufen weiter.
+      {% endif %}
   - type: grid
     columns: 2
     square: false

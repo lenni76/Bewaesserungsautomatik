@@ -1,6 +1,8 @@
 from __future__ import annotations
-from dataclasses import dataclass, asdict
+
+from dataclasses import asdict, dataclass
 from typing import Any
+
 
 @dataclass(slots=True)
 class IrrigationSnapshot:
@@ -10,8 +12,8 @@ class IrrigationSnapshot:
     running: bool = False
     manual: bool = False
     remaining_minutes: int = 0
-    effective_rain_mm: float = 0.0
-    forecast_rain_12h_mm: float = 0.0
+    effective_rain_mm: float | None = None
+    forecast_rain_12h_mm: float | None = None
     measured_max_yesterday_c: float | None = None
     forecast_max_today_c: float | None = None
     calculation_temperature_c: float | None = None

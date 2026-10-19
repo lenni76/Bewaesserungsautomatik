@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from typing import Final
 
 DOMAIN: Final = "bewaesserungsautomatik"
@@ -11,12 +12,14 @@ CONF_VALVE = "valve_entity"
 CONF_RUNTIME = "runtime_entity"
 CONF_PROFILE = "plant_profile"
 CONF_EXPOSURE = "exposure"
+CONF_HISTORY_GENERATION = "weather_history_generation"
 DEFAULT_PROFILE = "flower_bed"
 DEFAULT_EXPOSURE = "sunny"
 STORAGE_VERSION = 1
 STORAGE_KEY = f"{DOMAIN}.{{entry_id}}"
 
 DEFAULTS = {
+    "watering_enabled": True,
     "automation_enabled": True,
     "safety_enabled": True,
     "expert_mode": False,
